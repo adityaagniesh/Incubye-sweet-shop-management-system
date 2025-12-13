@@ -65,7 +65,7 @@ class SweetServiceImplTest {
 
         // Assert
         assertEquals(2, result.size());
-        assertEquals("Rasugulla", result.get(0).getSweetName());
+        assertEquals("Gulab Jamun", result.get(0).getSweetName());
         assertEquals(SweetCategory.CHOCOLATE, result.get(0).getSweetCategory());
     }
 }
