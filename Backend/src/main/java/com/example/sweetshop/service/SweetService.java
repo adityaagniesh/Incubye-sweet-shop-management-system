@@ -15,4 +15,6 @@ public interface SweetService {
     List<SweetResponseDTO> searchSweets(String sweetName, SweetCategory sweetCategory, Double minPrice, Double maxPrice);
 
     SweetResponseDTO updateSweet(Long sweetId, @Valid SweetRequestDTO requestDTO);
+
+    void deleteSweet(Long sweetId);
 }

@@ -68,4 +68,15 @@ public class SweetServiceImpl implements SweetService {
         return modelMapper.map(updatedSweet, SweetResponseDTO.class);
 
     }
+
+    @Override
+    public void deleteSweet(Long sweetId) {
+        Sweet sweet = sweetRepository.findById(sweetId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Sweet not found with id: " + sweetId
+                        ));
+
+        sweetRepository.delete(sweet);
+    }
 }
