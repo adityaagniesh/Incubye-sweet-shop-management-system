@@ -1,6 +1,8 @@
 package com.example.sweetshop.service;
 
 import com.example.sweetshop.model.SweetCategory;
+import com.example.sweetshop.payload.PurchaseRequestDTO;
+import com.example.sweetshop.payload.PurchaseResponseDTO;
 import com.example.sweetshop.payload.SweetRequestDTO;
 import com.example.sweetshop.payload.SweetResponseDTO;
 import jakarta.validation.Valid;
@@ -17,4 +19,6 @@ public interface SweetService {
     SweetResponseDTO updateSweet(Long sweetId, @Valid SweetRequestDTO requestDTO);
 
     void deleteSweet(Long sweetId);
+
+    PurchaseResponseDTO purchaseSweet(Long sweetId, @Valid PurchaseRequestDTO requestDTO);
 }

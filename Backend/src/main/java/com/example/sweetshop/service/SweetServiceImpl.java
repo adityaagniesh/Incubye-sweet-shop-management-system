@@ -1,15 +1,19 @@
 package com.example.sweetshop.service;
 
 import com.example.sweetshop.exceptions.APIException;
+import com.example.sweetshop.exceptions.InsufficientStockException;
 import com.example.sweetshop.exceptions.ResourceNotFoundException;
 import com.example.sweetshop.model.Sweet;
 import com.example.sweetshop.model.SweetCategory;
+import com.example.sweetshop.payload.PurchaseRequestDTO;
+import com.example.sweetshop.payload.PurchaseResponseDTO;
 import com.example.sweetshop.payload.SweetRequestDTO;
 import com.example.sweetshop.payload.SweetResponseDTO;
 import com.example.sweetshop.repository.SweetRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -79,4 +83,32 @@ public class SweetServiceImpl implements SweetService {
 
         sweetRepository.delete(sweet);
     }
+
+    @Override
+    @Transactional
+    public PurchaseResponseDTO purchaseSweet(Long sweetId, PurchaseRequestDTO requestDTO) {
+        Sweet sweet = sweetRepository.findById(sweetId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Sweet not found with id: " + sweetId
+                        ));
+
+        int requestedQty = requestDTO.getQuantity();
+
+        if (requestedQty > sweet.getQuantity()) {
+            throw new InsufficientStockException(
+                    "Insufficient stock. Available quantity: " + sweet.getQuantity()
+            );
+        }
+
+        // decrease inventory
+        sweet.setQuantity(sweet.getQuantity() - requestedQty);
+        sweetRepository.save(sweet);
+
+        return new PurchaseResponseDTO(
+                "Purchase successful",
+                sweet.getQuantity()
+        );
+    }
+
 }

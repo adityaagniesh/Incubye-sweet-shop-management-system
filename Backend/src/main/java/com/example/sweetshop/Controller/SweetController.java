@@ -1,6 +1,8 @@
 package com.example.sweetshop.Controller;
 
 import com.example.sweetshop.model.SweetCategory;
+import com.example.sweetshop.payload.PurchaseRequestDTO;
+import com.example.sweetshop.payload.PurchaseResponseDTO;
 import com.example.sweetshop.payload.SweetRequestDTO;
 import com.example.sweetshop.payload.SweetResponseDTO;
 import com.example.sweetshop.service.SweetService;
@@ -69,6 +71,17 @@ public class SweetController {
     ) {
         sweetService.deleteSweet(sweetId);
         return ResponseEntity.noContent().build(); // 204
+    }
+
+    @PostMapping("/{sweetId}/purchase")
+    public ResponseEntity<PurchaseResponseDTO> purchaseSweet(
+            @PathVariable("sweetId") Long sweetId,
+            @Valid @RequestBody PurchaseRequestDTO requestDTO
+    ) {
+        PurchaseResponseDTO response =
+                sweetService.purchaseSweet(sweetId, requestDTO);
+
+        return ResponseEntity.ok(response);
     }
 
 }
