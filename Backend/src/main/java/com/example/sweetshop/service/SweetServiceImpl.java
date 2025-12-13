@@ -2,6 +2,7 @@ package com.example.sweetshop.service;
 
 import com.example.sweetshop.exceptions.APIException;
 import com.example.sweetshop.model.Sweet;
+import com.example.sweetshop.model.SweetCategory;
 import com.example.sweetshop.payload.SweetRequestDTO;
 import com.example.sweetshop.payload.SweetResponseDTO;
 import com.example.sweetshop.repository.SweetRepository;
@@ -36,6 +37,15 @@ public class SweetServiceImpl implements SweetService {
         return sweetRepository.findAll()
                 .stream()
                 .map(sweet -> modelMapper.map(sweet,SweetResponseDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<SweetResponseDTO> searchSweets(String sweetName, SweetCategory sweetCategory, Double minPrice, Double maxPrice) {
+        return sweetRepository
+                .searchSweets(sweetName, sweetCategory, minPrice, maxPrice)
+                .stream()
+                .map(sweet -> modelMapper.map(sweet, SweetResponseDTO.class))
                 .toList();
     }
 }

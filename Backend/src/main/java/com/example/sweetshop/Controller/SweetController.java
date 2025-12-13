@@ -1,5 +1,6 @@
 package com.example.sweetshop.Controller;
 
+import com.example.sweetshop.model.SweetCategory;
 import com.example.sweetshop.payload.SweetRequestDTO;
 import com.example.sweetshop.payload.SweetResponseDTO;
 import com.example.sweetshop.service.SweetService;
@@ -28,6 +29,18 @@ public class SweetController {
     @GetMapping
     public ResponseEntity<List<SweetResponseDTO>> getAllSweets() {
         return ResponseEntity.ok(sweetService.getAllSweets());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<SweetResponseDTO>> searchSweets(
+            @RequestParam(required = false) String sweetName,
+            @RequestParam(required = false) SweetCategory sweetCategory,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice
+            ) {
+        return ResponseEntity.ok(
+                sweetService.searchSweets(sweetName, sweetCategory, minPrice, maxPrice)
+        );
     }
 
 
