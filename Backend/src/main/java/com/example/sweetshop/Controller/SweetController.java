@@ -28,7 +28,13 @@ public class SweetController {
 
     @GetMapping
     public ResponseEntity<List<SweetResponseDTO>> getAllSweets() {
-        return ResponseEntity.ok(sweetService.getAllSweets());
+
+        List<SweetResponseDTO> sweets=sweetService.getAllSweets();
+
+        if(sweets.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(sweets);
     }
 
     @GetMapping("/search")
@@ -38,9 +44,15 @@ public class SweetController {
             @RequestParam(required = false) Double minPrice,
             @RequestParam(required = false) Double maxPrice
             ) {
-        return ResponseEntity.ok(
-                sweetService.searchSweets(sweetName, sweetCategory, minPrice, maxPrice)
-        );
+
+        List<SweetResponseDTO> sweets =
+                sweetService.searchSweets(sweetName, sweetCategory, minPrice, maxPrice);
+
+        if (sweets.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(sweets);
     }
 
 
