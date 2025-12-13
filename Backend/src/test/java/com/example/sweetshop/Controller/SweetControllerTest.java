@@ -31,7 +31,7 @@ class SweetControllerTest {
         String request = """
             {
               "sweetName": "Rasgulla",
-              "category": "INDIAN",
+              "sweetCategory": "INDIAN",
               "price": 200,
               "quantity": 5
             }
