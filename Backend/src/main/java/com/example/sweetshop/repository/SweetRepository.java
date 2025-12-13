@@ -12,6 +12,7 @@ import java.util.List;
 public interface SweetRepository extends JpaRepository<Sweet, Long> {
 
     Sweet findBySweetName(String sweetName);
+    Sweet findBySweetId(Long sweetId);
 
     @Query("""
     SELECT s FROM Sweet s

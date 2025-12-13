@@ -51,9 +51,16 @@ public class SweetController {
         if (sweets.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.ok(sweets);
     }
 
+    @PutMapping("/{sweetId}")
+    public ResponseEntity<SweetResponseDTO> updateSweet(
+            @PathVariable Long sweetId,
+            @Valid @RequestBody SweetRequestDTO requestDTO
+    ) {
+        SweetResponseDTO response = sweetService.updateSweet(sweetId, requestDTO);
+        return ResponseEntity.ok(response);
+    }
 
 }

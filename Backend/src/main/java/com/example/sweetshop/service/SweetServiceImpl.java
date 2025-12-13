@@ -1,6 +1,7 @@
 package com.example.sweetshop.service;
 
 import com.example.sweetshop.exceptions.APIException;
+import com.example.sweetshop.exceptions.ResourceNotFoundException;
 import com.example.sweetshop.model.Sweet;
 import com.example.sweetshop.model.SweetCategory;
 import com.example.sweetshop.payload.SweetRequestDTO;
@@ -47,5 +48,24 @@ public class SweetServiceImpl implements SweetService {
                 .stream()
                 .map(sweet -> modelMapper.map(sweet, SweetResponseDTO.class))
                 .toList();
+    }
+
+    @Override
+    public SweetResponseDTO updateSweet(Long sweetId, SweetRequestDTO requestDTO) {
+
+        Sweet sweet = sweetRepository.findById(sweetId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Sweet not found with id: " + sweetId));
+
+        // update fields
+        sweet.setSweetName(requestDTO.getSweetName());
+        sweet.setPrice(requestDTO.getPrice());
+        sweet.setQuantity(requestDTO.getQuantity());
+        sweet.setSweetcategory(requestDTO.getSweetCategory());
+
+        Sweet updatedSweet = sweetRepository.save(sweet);
+
+        return modelMapper.map(updatedSweet, SweetResponseDTO.class);
+
     }
 }
