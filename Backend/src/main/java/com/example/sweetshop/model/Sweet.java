@@ -23,4 +23,7 @@ public class Sweet {
     private String description;
     private double price;
     private int quantity;
+
+    public void setName(String gulabJamun) {
+    }
 }
