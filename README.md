@@ -38,11 +38,9 @@ Testing: JUnit, Mockito
 API Testing: Postman
 
 📂 Project Structure
-
+```
 Backend/
-│
 ├── src/main/java/com/example/sweetshop
-│   │
 │   ├── config
 │   │   ├── AppConfig.java
 │   │   ├── DataInitializer.java
@@ -59,9 +57,9 @@ Backend/
 │   │   └── ResourceNotFoundException.java
 │   │
 │   ├── model
-│   │   ├── AppRole.java        (Enum)
+│   │   ├── AppRole.java          (Enum)
 │   │   ├── Sweet.java
-│   │   ├── SweetCategory.java  (Enum)
+│   │   ├── SweetCategory.java    (Enum)
 │   │   └── Users.java
 │   │
 │   ├── payload   (DTOs)
@@ -103,6 +101,7 @@ Backend/
 │       └── SweetServiceTest.java
 │
 └── pom.xml
+```
 
 📮 API Endpoints
 🍬 Sweet Management
@@ -124,17 +123,30 @@ Backend/
 
 ⚙️ Setup & Installation
 1.Clone the repository
-    https://github.com/adityaagniesh/Incubye-sweet-shop-management-system.git
-2. cd/Backend
-3. if want to test on h2 database 
-          run 
-    if on postgresql
-    comment h2 and uncomment postgresql code in both application.properties and pom.xml
-4. frontend is not connected with backend and frontend coauthor: builder.io
-5. for frontend 
-    cd frontend
-    npm install
-    npm run dev
+https://github.com/adityaagniesh/Incubye-sweet-shop-management-system.git
+
+2.Navigate to backend folder
+cd Backend
+
+3.Database configuration
+
+For H2 database: run the application directly
+
+For PostgreSQL: comment H2 configuration and uncomment PostgreSQL configuration in both application.properties and pom.xml
+
+4.Frontend and backend are running separately
+
+Frontend is not connected with backend
+
+Frontend co-author: Builder.io
+
+Frontend setup steps
+
+Go to frontend folder
+
+Run npm install
+
+Run npm run dev
 
 🔑 Default Test Credentials
 
