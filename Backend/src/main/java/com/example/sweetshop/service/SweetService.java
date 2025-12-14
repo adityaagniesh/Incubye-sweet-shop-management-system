@@ -1,10 +1,7 @@
 package com.example.sweetshop.service;
 
 import com.example.sweetshop.model.SweetCategory;
-import com.example.sweetshop.payload.PurchaseRequestDTO;
-import com.example.sweetshop.payload.PurchaseResponseDTO;
-import com.example.sweetshop.payload.SweetRequestDTO;
-import com.example.sweetshop.payload.SweetResponseDTO;
+import com.example.sweetshop.payload.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -21,4 +18,6 @@ public interface SweetService {
     void deleteSweet(Long sweetId);
 
     PurchaseResponseDTO purchaseSweet(Long sweetId, @Valid PurchaseRequestDTO requestDTO);
+
+    RestockResponseDTO restockSweet(Long sweetId, @Valid RestockRequestDTO requestDTO);
 }

@@ -1,15 +1,13 @@
 package com.example.sweetshop.Controller;
 
 import com.example.sweetshop.model.SweetCategory;
-import com.example.sweetshop.payload.PurchaseRequestDTO;
-import com.example.sweetshop.payload.PurchaseResponseDTO;
-import com.example.sweetshop.payload.SweetRequestDTO;
-import com.example.sweetshop.payload.SweetResponseDTO;
+import com.example.sweetshop.payload.*;
 import com.example.sweetshop.service.SweetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +19,7 @@ public class SweetController {
     @Autowired
     private SweetService sweetService;
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PostMapping
     public ResponseEntity<SweetRequestDTO> addSweet(
             @Valid  @RequestBody SweetRequestDTO sweetRequestDTO) {
@@ -28,6 +27,7 @@ public class SweetController {
         return new ResponseEntity<>(savedSweetRequestDTO, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public ResponseEntity<List<SweetResponseDTO>> getAllSweets() {
 
@@ -39,6 +39,7 @@ public class SweetController {
         return ResponseEntity.ok(sweets);
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/search")
     public ResponseEntity<List<SweetResponseDTO>> searchSweets(
             @RequestParam(required = false) String sweetName,
@@ -56,6 +57,7 @@ public class SweetController {
         return ResponseEntity.ok(sweets);
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PutMapping("/{sweetId}")
     public ResponseEntity<SweetResponseDTO> updateSweet(
             @PathVariable Long sweetId,
@@ -65,6 +67,7 @@ public class SweetController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{sweetId}")
     public ResponseEntity<Void> deleteSweet(
             @PathVariable("sweetId") Long sweetId
@@ -73,6 +76,7 @@ public class SweetController {
         return ResponseEntity.noContent().build(); // 204
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PostMapping("/{sweetId}/purchase")
     public ResponseEntity<PurchaseResponseDTO> purchaseSweet(
             @PathVariable("sweetId") Long sweetId,
@@ -80,6 +84,18 @@ public class SweetController {
     ) {
         PurchaseResponseDTO response =
                 sweetService.purchaseSweet(sweetId, requestDTO);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/{sweetId}/restock")
+    public ResponseEntity<RestockResponseDTO> restockSweet(
+            @PathVariable("sweetId") Long sweetId,
+            @Valid @RequestBody RestockRequestDTO requestDTO
+    ) {
+        RestockResponseDTO response =
+                sweetService.restockSweet(sweetId, requestDTO);
 
         return ResponseEntity.ok(response);
     }
