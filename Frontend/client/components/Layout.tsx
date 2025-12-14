@@ -10,6 +10,7 @@ export default function Layout({ children }: LayoutProps) {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-grow pt-16">
+        
         {children}
       </main>
       <Footer />
